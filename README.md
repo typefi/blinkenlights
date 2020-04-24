@@ -11,6 +11,14 @@ In addition to job queuing and load balancing, Blinkenlights enables:
 
 Blinkenlights is built using a high availability cluster to ensure it can handle high traffic, and that no data is lost in the result of a server failure. It also supports a RESTful API to submit jobs, and control jobs, servers, and queues. You do not need Blinkenlights to run InDesign Server successfully, but we highly recommend it when you have multiple InDesign Server instances.
 
+## **Container Registry**
+You can `docker pull` the following packages from our container registry:
+
+*  containers.typefi.com/blinkenlights:latest
+*  containers.typefi.com/grafana:latest
+*  containers.typefi.com/prometheus:latest
+*  containers.typefi.com/nginx:latest
+
 ## **Key features**
 
 **Load balancing** — Blinkenlights queues submitted job requests and delegates them to be run on the next available instance of InDesign Server.
