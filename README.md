@@ -14,10 +14,10 @@ Blinkenlights is built using a high availability cluster to ensure it can handle
 ## **Container Registry**
 You can `docker pull` the following packages from our container registry:
 
-*  containers.typefi.com/blinkenlights:latest
-*  containers.typefi.com/grafana:latest
-*  containers.typefi.com/prometheus:latest
-*  containers.typefi.com/nginx:latest
+*  `containers.typefi.com/blinkenlights:latest`
+*  `containers.typefi.com/grafana:latest`
+*  `containers.typefi.com/prometheus:latest`
+*  `containers.typefi.com/nginx:latest`
 
 ## **Key features**
 
