@@ -38,11 +38,11 @@ You will need the Amazon ECS command line interface (CLI) to deploy Blinkenlight
 
 ### Update parameters
 
-*   Update the ecs-params.yml file for your desired environment
-*   Update the docker-compose.yml file and substitute the parameters as needed
+*   Update the `ecs-params.yml` file for your desired environment
+*   Update the `docker-compose.yml` file and substitute the parameters as needed
     *   Point to your remote remote mongodb database `NODE_CONFIG`. Don't have MongoDB? Try [MongoDB Atlas](https://www.mongodb.com/cloud/atlas). The free tier will suffice
     *   Update the Blinkenlights license `BL_LICENSE`
-    *   Set the logging to point to the correct region (awslog-region). The default is "us-east-1". This will create a cluster and service running on ECS that has "[Service Discovery](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/service-discovery.html)". Service Discovery means Blinkenlights is discoverable by services on the same VPC that uses this endpoint: "blinkenlights.blinkenlights". You can also find it in **ECS -> Clusters -> blinkenlights -> tasks -> task -> public and private IP**
+    *   Set the logging to point to the correct region (awslog-region). The default is "us-east-1". This will create a cluster and service running on ECS that has "[Service Discovery](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/service-discovery.html)". Service Discovery means Blinkenlights is discoverable by services on the same VPC. 
 
 ### Start Blinkenlights on AWS
 
@@ -72,7 +72,7 @@ This command outputs the `AWS_SECURITY_GROUP_ID`
 
 **6) Set security group inbound rules**
 
-_HTTP_
+_HTTP/HTTPS_
 ```
 aws ec2 authorize-security-group-ingress --group-id AWS_SECURITY_GROUP_ID --protocol tcp --port 80 --cidr RANGE
 ```
@@ -98,7 +98,7 @@ ecs-cli compose --project-name blinkenlights service up --private-dns-namespace 
 ```
 or
 ```
-ecs-cli compose --ecs-params ecs-params.yml --project-name blinkenlights service up --vpc vpc-5190d138 --cluster-config blinkenlights --ecs-profile blinkenlights-profile --enable-service-discovery --public-dns-namespace-id NAMESPACE-ID
+ecs-cli compose --ecs-params ecs-params.yml --project-name blinkenlights service up --vpc AWS_VPC_ID --cluster-config blinkenlights --ecs-profile blinkenlights-profile --enable-service-discovery --public-dns-namespace-id NAMESPACE-ID
 ```
 
 ### Stop Blinkenlights on AWS
