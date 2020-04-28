@@ -1,27 +1,28 @@
 version: '3.0'
 services:
   blinkenlights:
-    image: 814061449400.dkr.ecr.us-east-1.amazonaws.com/blinkenlights
+    image: containers.typefi.com/blinkenlights:latest
     expose:
       - "8081"
     ports: 
       - "8081:8081" 
     networks:
       - backend
-    depends_on:
-      - mongo
+    # depends_on:
+    #   - mongo
     environment:
-      NODE_CONFIG: '{"mongodb": "mongodb://mongo:27017/blinkenlights", "mongodbStore": "mongodb://mongo:27017/blinkenlightsSessions", "prometheusUrl": "http://prometheus:9090/api/v1/query", "metricsUrl": "/grafana/d/JX28ZKfmz/blinkenlights?refresh=15s&orgId=1&var-Pool=All&var-Customer=All"}'                                
-      BL_LICENSE: ""
-  mongo:
-    image: mongo:4.0.11
-    restart: always
-    volumes:
-      - mongo-data:/data/db
-    expose:
-      - "27017"
-    networks:
-      - backend      
+      # NODE_CONFIG: '{"mongodb": "mongodb://mongo:27017/blinkenlights", "mongodbStore": "mongodb://mongo:27017/blinkenlightsSessions", "prometheusUrl": "http://prometheus:9090/api/v1/query", "metricsUrl": "/grafana/d/JX28ZKfmz/blinkenlights?refresh=15s&orgId=1&var-Pool=All&var-Customer=All"}'                                
+      NODE_CONFIG: '{"mongodb": "mongodb+srv://<mongodb-user>:<mongodb-password>@<mongodb-server>/<mongo-db-cluster-blinkenlights>?retryWrites=true", "mongodbStore": "mongodb+srv://<mongodb-user>:<mongodb-password>@<mongodb-server>/<mongo-db-cluster-blinkenlights-sessions>?retryWrites=true", "prometheusUrl": "http://prometheus:9090/api/v1/query", "metricsUrl": "/grafana/d/JX28ZKfmz/blinkenlights?refresh=15s&orgId=1&var-Pool=All&var-Customer=All"}'
+      BL_LICENSE: "<blinkenlights-license-contact-sales-or-support>"
+  # mongo:
+  #   image: mongo:4.0.11
+  #   restart: always
+  #   volumes:
+  #     - mongo-data:/data/db
+  #   expose:
+  #     - "27017"
+  #   networks:
+  #     - backend      
   prometheus:
     image: prom/prometheus:v2.3.2    
     volumes:
@@ -68,6 +69,6 @@ networks:
   backend:
   
 volumes:
-  mongo-data:
+  # mongo-data:
   prometheus_data:
   grafana_data:
