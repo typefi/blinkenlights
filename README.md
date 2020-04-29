@@ -37,8 +37,15 @@ Blinkenlights can also _optionally_ mark an InDesign Server instance as 'reserve
 
 **Logging** — Blinkenlights logs the history of every job; whether it succeeded or failed, the length of time it ran, and which InDesign Server instance it ran on.
 
+## Running Blinkenlights on Docker Desktop
 
-## Deploying Blinkenlights
+*   Edit the base `docker-compose.yml` with your MongoDB instance information. You can use a local server or MongoDB Atlas.  The database is less than 512 Mb in production. 
+*   Additionally, set tbe `BL_LICENSE` to the license key issued by Typefi.
+*   Run `docker-compose up` to start the instance.
+*   The instance will be accessible on http://localhost:8081 by default.
+
+
+## Deploying Blinkenlights on AWS Fargate 
 
 We will walk through an example of deploying Blinkenlights in an Amazon Virtual Private Cloud (VPC) on Amazon Elastic Container Service (ECS) and Amazon Fargate. This example assumes Blinkenlights has a public IP address (for internet access) and guides you through a complete setup. Your environment may be a simpler, or a more complex, version of this deployment.
 
@@ -46,8 +53,8 @@ You will need the Amazon ECS command line interface (CLI) to deploy Blinkenlight
 
 ### Update parameters
 
-*   Update the `ecs-params.yml` file for your desired environment
-*   Update the `docker-compose.yml` file and substitute the parameters as needed
+*   Rename `ecs-params-sample-fargate.yml`to `ecs-params.yml`and update the `ecs-params.yml` file for your desired environment
+*   Rename `docker-compose-sample-fargate.yml` to `docker-compose.yml` and update the `docker-compose.yml` file and substitute the parameters as needed
     *   Point to your remote remote mongodb database `NODE_CONFIG`. Don't have MongoDB? Try [MongoDB Atlas](https://www.mongodb.com/cloud/atlas). The free tier will suffice
     *   Update the Blinkenlights license `BL_LICENSE`
     *   Set the logging to point to the correct region (awslog-region). The default is "us-east-1". This will create a cluster and service running on ECS that has "[Service Discovery](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/service-discovery.html)". Service Discovery means Blinkenlights is discoverable by services on the same VPC. 
