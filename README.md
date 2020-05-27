@@ -37,6 +37,9 @@ Blinkenlights can also _optionally_ mark an InDesign Server instance as 'reserve
 
 **Logging** — Blinkenlights logs the history of every job; whether it succeeded or failed, the length of time it ran, and which InDesign Server instance it ran on.
 
+## Troubleshooting
+*  To restart the Blinkenlights node without reloading the task or service, visit `/api/v1/restart`
+
 ## Running Blinkenlights on Docker Desktop
 
 *   Edit the base `docker-compose.yml` with your MongoDB instance information. You can use a local server or MongoDB Atlas.  The database is less than 512 Mb in production. 
