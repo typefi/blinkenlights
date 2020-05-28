@@ -43,7 +43,7 @@ Blinkenlights can also _optionally_ mark an InDesign Server instance as 'reserve
 ## Running Blinkenlights on Docker Desktop
 
 *   Edit the base `docker-compose.yml` with your MongoDB instance information. You can use a local server or MongoDB Atlas.  The database is less than 512 Mb in production. 
-*   Additionally, set tbe `BL_LICENSE` to the license key issued by Typefi.
+*   Additionally, set the `BL_LICENSE` to the license key issued by Typefi.
 *   Run `docker-compose up` to start the instance.
 *   The instance will be accessible on http://localhost:8081 by default.
 
