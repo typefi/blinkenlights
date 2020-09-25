@@ -62,7 +62,7 @@ services:
     depends_on:
       - blinkenlights
     ports:
-      - "4000:4000"
+      - "80:4000"
     networks:
       - backend
 networks:
