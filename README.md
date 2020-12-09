@@ -216,3 +216,6 @@ To cancel a job, click on the job in the Dashboard to view its details, and then
 Click an instance of InDesign Server to open the Edit InDesign Server dialog. Use the Edit InDesign Server dialog to make changes to the server hostname, port, or nickname, or to Disable, Unlock, or Remove the server.
 
 Note: Changes to the hostname, port, or nickname won't apply until you click Save.
+
+# Configue Typefi Server for Workgroup
+Typefi Server for Workgroup is generally configured from Admin > External Applications > InDesign.  Time to change that by going to Admin > External Applications > Blinkenlights and checking the box, supplying the http://<FQDN> or http://<IP> path and leaving the port blank assuming the config is on :80.  After the values are set, Refresh Queue will populate with queues from Blinkenlights and workflows may need an update.  The setting can be disabled for troubleshooting. 
