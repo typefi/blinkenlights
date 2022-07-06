@@ -1,7 +1,7 @@
 version: '3.0'
 services:
   blinkenlights:
-    image: docker pull containers.typefi.com/blinkenlights:latest
+    image: containers.typefi.com/blinkenlights:latest
     expose:
       - "8081"
     ports:
