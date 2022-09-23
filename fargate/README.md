@@ -6,13 +6,14 @@ You will need the Amazon ECS command line interface (CLI) to deploy Blinkenlight
 
 ### Update parameters
 
-*   Rename `ecs-params-sample-fargate.yml`to `ecs-params.yml`and update the `ecs-params.yml` file for your desired environment
-*   Rename `docker-compose-sample-fargate.yml` to `docker-compose.yml` and update the `docker-compose.yml` file and substitute the parameters as needed
+*   Update the `ecs-params.yml` file for your desired environment
+*   Update the `docker-compose.yml` file and substitute the parameters as needed
     *   Point to your remote remote mongodb database `NODE_CONFIG`. Don't have MongoDB? Try [MongoDB Atlas](https://www.mongodb.com/cloud/atlas). The free tier will suffice
     *   Update the Blinkenlights license `BL_LICENSE`
     *   Set the logging to point to the correct region (awslog-region). The default is "us-east-1". This will create a cluster and service running on ECS that has "[Service Discovery](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/service-discovery.html)". Service Discovery means Blinkenlights is discoverable by services on the same VPC. 
 
 ### Create environmental variables
+Update and add these environmental variables to help make the setup process easier
 ```
 export AWS_REGION=us-east-1
 export AWS_ACCESS_KEY_ID=
@@ -99,11 +100,20 @@ ecs-cli compose --project-name $AWS_SERVICE service down --cluster-config $CLI_C
 ecs-cli down --cluster-config $CLI_CLUSTER_CONFIG --ecs-profile $ECS_PROFILE
 ```
 
+### Updating the docker-compose.yml
+
+```
+ecs-cli compose --project-name $AWS_SERVICE --region $AWS_REGION create --launch-type FARGATE --profile $AWS_PROFILE
+```
+```
+aws ecs update-service --cluster $AWS_CLUSTER --service $AWS_SERVICE --force-new-deployment
+```
+
 ### Updating and restarting Blinkenlights on AWS
 
 _If you already have a Blinkenlights service:_
 ```
-aws ecs update-service --cluster CLUSTER_NAME --service SERVICE_NAME --force-new-deployment 
+aws ecs update-service --cluster $AWS_CLUSTER --service $AWS_SERVICE --force-new-deployment 
 ```
 
 For Blinkenlights, the command would look like this:
@@ -113,78 +123,10 @@ aws ecs update-service --cluster blinkenlights --service blinkenlights --force-n
 ```
 _If you do not have a Blinkenlights service:_
 ```
-aws ecs update-service --cluster CLUSTER_NAME --service SERVICE_NAME
+aws ecs update-service --cluster $AWS_CLUSTER --service $AWS_SERVICE
 ```
 For Blinkenlights, the command would look like this:
 ```
 aws ecs update-service --cluster blinkenlights --service blinkenlights
 ```
 
-## **Using Blinkenlights**
-### User interface
-
-The main view in Blinkenlights is called the _Dashboard_. The Dashboard shows your job queues, any active or queued jobs and their elapsed or wait times, and your InDesign Servers instances and their status.
-
-On the left side of the screen is the controls menu, which provides quick access to the administrative functions you can perform. The menu options are:
-*   Search
-*   Add server
-*   Add queue
-*   Metrics
-*   Test lab
-*   Settings
-
-At the bottom of the screen is a collapsed _Logs_ tab that provides an at-a-glance view of completed jobs and job warnings or errors. Clicking anywhere on this tab causes it to “slide up” to give you complete access to the detailed logs.
-
-### Creating your first job queue
-
-Click **Add queue** to create your first job queue. By default, new job queues are named "New queue" followed by a unique identifier. For example, "New queue (5c65e41e2d4376770020b9a8)". Enter a new name and then click out of the field to save your changes.
-
-Follow these conventions when naming a job queue:
-*   Job queue names must be unique.
-*   You can use numbers and most symbols.
-*   The name cannot be longer than 255 characters.
-*   Avoid using [control characters](https://en.wikipedia.org/wiki/Control_character) or any of the following: * &lt; > : " / | \ ? ; ! ^
-*   Do not start or end a name with a period (.).
-*   Avoid starting or ending a name with a space.
-
-After creating your first job queue, add one or more InDesign Server instances.
-
-### Adding an InDesign Server
-
-Click **Add server** to open the _Add InDesign Server_ dialogue.
-
-1. Enter the Hostname and Port for your InDesign Server instance. For example, Hostname: ourhost.company.com and Port: 18383.
-2. Optionally enter a Nickname to help you more quickly identify a server (note: nicknames must be unique) and assign it to a job queue (newly added InDesign Server instances are automatically added to the unassigned job queue).
-
-**Note**: You can also move InDesign Server instances between job queues by dragging the server into a new queue.
-
-**Note**: A single InDesign Server instance cannot be added to more than one queue.
-
-
-### Searching or filtering jobs
-
-The Search tab is located at the top right of the screen. You can hide or show the Search tab by clicking the Search control on the left of the screen.
-
-You can search or filter jobs using wildcard searches. Both active and queued jobs that match your search criteria will be highlighted, while non-matching jobs will be dimmed. Clear your search to restore the normal appearance.
-
-You can also use the Search tab to control which job metadata (Customer, Owner, Origin, Description, or Id) is displayed as a job label.
-
-
-### Viewing job details
-
-Click on any job in the Dashboard to view its details, such as its priority, status, position in the queue, when it was submitted to Blinkenlights, and how long it's been in the queue, and to select metadata (Customer, Owner, Origin, and Description) from the job submission that can be used to help you track and identify jobs as they are queued or in progress.
-
-
-### Cancelling a job
-
-To cancel a job, click on the job in the Dashboard to view its details, and then click Cancel. Cancelling a job will remove it from the queue and notify the submitter that the job was cancelled.
-
-
-### Configuring an InDesign Server
-
-Click an instance of InDesign Server to open the Edit InDesign Server dialog. Use the Edit InDesign Server dialog to make changes to the server hostname, port, or nickname, or to Disable, Unlock, or Remove the server.
-
-Note: Changes to the hostname, port, or nickname won't apply until you click Save.
-
-# Configue Typefi Server for Workgroup
-Typefi Server for Workgroup is generally configured from Admin > External Applications > InDesign.  Time to change that by going to Admin > External Applications > Blinkenlights and checking the box, supplying the http://<FQDN> or http://<IP> path and leaving the port blank assuming the config is on :80.  After the values are set, Refresh Queue will populate with queues from Blinkenlights and workflows may need an update.  The setting can be disabled for troubleshooting. 
