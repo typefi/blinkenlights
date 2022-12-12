@@ -8,7 +8,6 @@ You will need the Amazon ECS command line interface (CLI) to deploy Blinkenlight
 
 *   Update the `ecs-params.yml` file for your desired environment
 *   Update the `docker-compose.yml` file and substitute the parameters as needed
-    *   Point to your remote remote mongodb database `NODE_CONFIG`. Don't have MongoDB? Try [MongoDB Atlas](https://www.mongodb.com/cloud/atlas). The free tier will suffice
     *   Update the Blinkenlights license `BL_LICENSE`
     *   Set the logging to point to the correct region (awslog-region). The default is "us-east-1". This will create a cluster and service running on ECS that has "[Service Discovery](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/service-discovery.html)". Service Discovery means Blinkenlights is discoverable by services on the same VPC. 
 
