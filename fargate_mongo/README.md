@@ -102,10 +102,10 @@ ecs-cli down --cluster-config $CLI_CLUSTER_CONFIG --ecs-profile $ECS_PROFILE
 ### Updating the docker-compose.yml
 
 ```
-ecs-cli compose --project-name $AWS_SERVICE --region $AWS_REGION create --launch-type FARGATE --profile $AWS_PROFILE
+ecs-cli compose --project-name $AWS_SERVICE --region $AWS_REGION create --launch-type FARGATE
 ```
 ```
-aws ecs update-service --cluster $AWS_CLUSTER --service $AWS_SERVICE --force-new-deployment
+aws ecs update-service --cluster $AWS_CLUSTER --service $AWS_SERVICE --force-new-deployment --profile $AWS_PROFILE
 ```
 
 ### Updating and restarting Blinkenlights on AWS
