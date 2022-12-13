@@ -6,12 +6,13 @@ You will need the Amazon ECS command line interface (CLI) to deploy Blinkenlight
 
 ### Update parameters
 
-*   Update the `ecs-params.yml` file for your desired environment
-*   Update the `docker-compose.yml` file and substitute the parameters as needed
+*   :pencil2: Update the `ecs-params.yml` file for your desired environment
+*   :pencil2: Update the `docker-compose.yml` file and substitute the parameters as needed
     *   Update the Blinkenlights license `BL_LICENSE`
     *   Set the logging to point to the correct region (awslog-region). The default is "us-east-1". This will create a cluster and service running on ECS that has "[Service Discovery](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/service-discovery.html)". Service Discovery means Blinkenlights is discoverable by services on the same VPC. 
 
 ### Create environmental variables
+:pencil2:
 Update and add these environmental variables to help make the setup process easier
 ```
 export AWS_REGION=us-east-1
@@ -58,6 +59,8 @@ aws ec2 create-security-group --group-name $AWS_SECURITY_GROUP_NAME --descriptio
 ```
 This command outputs the `AWS_SECURITY_GROUP_ID`
 
+:pencil2: export AWS_SECURITY_GROUP_ID= (output from last command)
+
 **6) Set security group inbound rules**
 
 _HTTP/HTTPS_
@@ -78,7 +81,7 @@ ecs-cli up --cluster-config $CLI_CLUSTER_CONFIG --ecs-profile $ECS_PROFILE --vpc
 ```
 **8) Update ECS configuration**
 
-Update the `ecs-params.yml` file with the subnet IDs and security group ID
+:pencil2: Update the `ecs-params.yml` file with the subnet IDs and security group ID
 
 **9) Deploy service to cluster**
 ```
