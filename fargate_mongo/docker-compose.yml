@@ -11,7 +11,7 @@ services:
     depends_on:
       - mongo
     environment:
-      NODE_CONFIG: '{"mongodb": "mongodb://mongo:27017/blinkenlights", "mongodbStore": "mongodb://mongo:27017/blinkenlightsSessions", "prometheusUrl": "http://localhost:9090/api/v1/query", "metricsUrl": "/grafana/d/JX28ZKfmz/blinkenlights?refresh=5s&orgId=1&var-Pool=All&var-Customer=All", "serverJobTimeout": "21600000"}'
+      NODE_CONFIG: '{"mongodb": "mongodb://127.0.0.1:27017/blinkenlights", "mongodbStore": "mongodb://127.0.0.1:27017/blinkenlightsSessions", "prometheusUrl": "http://localhost:9090/api/v1/query", "metricsUrl": "/grafana/d/JX28ZKfmz/blinkenlights?refresh=5s&orgId=1&var-Pool=All&var-Customer=All", "serverJobTimeout": "21600000"}'
       BL_LICENSE: "<blinkenlights-license-contact-sales-or-support>"
     logging:
       driver: awslogs
@@ -26,6 +26,8 @@ services:
       - mongo-data:/data/db
     expose:
       - "27017"
+    ports:
+      - "27017:27017"
     networks:
       - backend
   prometheus:
